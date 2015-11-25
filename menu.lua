@@ -54,6 +54,10 @@ function scene:create( event )
 	}
 	playBtn.x = display.contentWidth*0.5
 	playBtn.y = display.contentHeight - 125
+
+	local credits = display.newText('Credits', display.contentWidth*0.5, display.contentHeight - 70, native.systemFont, 20)
+	local credits = display.newText('Marko Mitranic', display.contentWidth*0.5, display.contentHeight - 45, native.systemFont, 16)
+	local credits = display.newText('Aleksandar Jeremenko', display.contentWidth*0.5, display.contentHeight - 25, native.systemFont, 16)
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
