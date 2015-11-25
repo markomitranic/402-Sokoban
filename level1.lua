@@ -25,6 +25,10 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 
+	-- Single Grid Item size
+	local gridSize = display.contentWidth/13
+
+
 	-- create a grey rectangle as the backdrop
 	-- local background = display.newRect( 0, 0, screenW, screenH )
 	-- background.anchorX = 0
@@ -32,9 +36,88 @@ function scene:create( event )
 	-- background:setFillColor( .5 )
 	
 	-- make a crate (off-screen), position it, and rotate slightly
-	local crate = display.newImageRect( "crate.png", 30, 30 )
-	crate.x, crate.y = 160, 100
+	-- local crate = display.newImageRect( "crate.png", gridSize, gridSize )
+	-- crate.x, crate.y = 160, 100
 	--crate.rotation = 15
+
+
+
+	-- Make the walls
+	local walls = {
+        { x=5, y=2 },
+        { x=6, y=2 },
+        { x=7, y=2 },
+        { x=5, y=3 },
+        { x=7, y=3 },
+        { x=5, y=4 },
+        { x=7, y=4 },
+        { x=8, y=4 },
+        { x=9, y=4 },
+        { x=10, y=4 },
+        { x=3, y=5 },
+        { x=4, y=5 },
+        { x=5, y=5 },
+        { x=10, y=5 },
+        { x=3, y=6 },
+        { x=8, y=6 },
+        { x=9, y=6 },
+        { x=10, y=6 },
+        { x=3, y=7 },
+        { x=4, y=7 },
+        { x=5, y=7 },
+        { x=6, y=7 },
+        { x=8, y=7 },
+        { x=6, y=8 },
+        { x=8, y=8 },
+        { x=6, y=9 },
+        { x=7, y=9 },
+        { x=8, y=9 },
+    }
+
+    local wallBlock = {}
+
+	for i=1,#walls do
+
+	wallBlock[i] = display.newImageRect( "wall.png", gridSize, gridSize )
+	wallBlock[i].x, wallBlock[i].y = walls[i].x * gridSize, walls[i].y * gridSize
+	physics.addBody( wallBlock[i], "static", { density=1.6, friction=0.5, bounce=0.2 } )
+
+    end
+
+
+
+
+    -- Player create
+	local player = display.newImageRect( "player.png", gridSize, gridSize )
+	player.x, player.y = 7 * gridSize, 6* gridSize
+	physics.addBody( player, "dynamic", { density=1.6, friction=0.5, bounce=0.2 } )
+
+
+
+
+
+	-- SPAWN the crates
+	local crates = {
+        { x=6, y=5 },
+        { x=6, y=6 },
+        { x=7, y=7 },
+        { x=8, y=5 },
+    }
+
+    local crate = {}
+
+	for i=1,#crates do
+
+	crate[i] = display.newImageRect( "crate.png", gridSize, gridSize )
+	crate[i].x, crate[i].y = crates[i].x * gridSize, crates[i].y * gridSize
+	physics.addBody( crate[i], "dynamic", { density=1.6, friction=0.5, bounce=0.2 } )
+
+    end
+
+
+
+
+
 	
 	-- add physics to the crate
 	-- physics.addBody( crate, { density=1.0, friction=0.3, bounce=0.3 } )
@@ -52,7 +135,7 @@ function scene:create( event )
 	-- all display objects must be inserted into group
 	--sceneGroup:insert( background )
 	--sceneGroup:insert( grass)
-	sceneGroup:insert( crate )
+	-- sceneGroup:insert( crate )
 end
 
 
